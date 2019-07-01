@@ -1,18 +1,19 @@
-require "graphql_picker/version"
+# frozen_string_literal: true
+
+require 'graphql_picker/version'
 require 'pry'
 require 'graphql'
 
 module GraphqlPicker
-
   class Picker
     def initialize(options)
       @name = options[:name]
-      @path = options[:path] || "./"
+      @path = options[:path] || './'
       @definitions = nil
     end
 
     def pick
-      concat_string = ""
+      concat_string = ''
       search_files.each do |file|
         string = File.read(file)
         concat_string += string
@@ -36,9 +37,7 @@ module GraphqlPicker
       search_files.each do |file|
         string = File.read(file)
         parsed = parse(string)
-        if search_by_name(name, parsed.definitions)
-          return file.to_s
-        end
+        return file.to_s if search_by_name(name, parsed.definitions)
       end
       nil
     end
@@ -46,9 +45,7 @@ module GraphqlPicker
     def search_by_name(name, definitions)
       definitions.each do |definition|
         if definition.respond_to?(:name)
-          if name == definition.name
-            return definition
-          end
+          return definition if name == definition.name
         elsif definition.respond_to?(:selections)
           if (obj = search_by_name(name, definition.selections)) && !obj.nil?
             return obj
@@ -69,7 +66,7 @@ module GraphqlPicker
           r.merge(search_included_fragment(selection, r))
         end
       end
-      return r
+      r
     end
 
     def search_files
@@ -84,6 +81,4 @@ module GraphqlPicker
       GraphQL.parse(all)
     end
   end
-
-
 end
