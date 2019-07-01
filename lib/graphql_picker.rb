@@ -20,11 +20,12 @@ module GraphqlPicker
       target = search_name(@name, parsed.definitions)
       fragments = search_included_fragment(target)
 
-      result = target.to_query_string
+      results = []
+      results << target.to_query_string
       Array(fragments.keys).each do |fragment_name|
-        result += search_name(fragment_name, parsed.definitions).to_query_string
+        results << search_name(fragment_name, parsed.definitions).to_query_string
       end
-      result
+      results.join("\n")
     end
 
     def search_name(name, definitions)
