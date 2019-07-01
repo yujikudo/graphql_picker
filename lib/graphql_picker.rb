@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'graphql_picker/version'
-require 'pry'
 require 'graphql'
 
 module GraphqlPicker
