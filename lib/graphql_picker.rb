@@ -21,11 +21,24 @@ module GraphqlPicker
       fragments = search_included_fragment(target)
 
       results = []
+      results << "# #{search_file(target.name)}"
       results << target.to_query_string
       Array(fragments.keys).each do |fragment_name|
+        results << "# #{search_file(fragment_name)}"
         results << search_name(fragment_name, parsed.definitions).to_query_string
       end
       results.join("\n")
+    end
+
+    def search_file(name)
+      search_files.each do |file|
+        string = File.read(file)
+        parsed = parse(string)
+        if search_name(name, parsed.definitions)
+          return file.to_s
+        end
+      end
+      nil
     end
 
     def search_name(name, definitions)
