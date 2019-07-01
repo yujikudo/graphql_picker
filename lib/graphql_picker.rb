@@ -8,6 +8,7 @@ module GraphqlPicker
     def initialize(options)
       @name = options[:name]
       @path = options[:path] || "./"
+      @definitions = nil
     end
 
     def pick
@@ -17,6 +18,7 @@ module GraphqlPicker
         concat_string += string
       end
       parsed = parse(concat_string)
+      @definitions = parsed.definitions
       target = search_by_name(@name, parsed.definitions)
       fragments = search_included_fragment(target)
 
@@ -60,6 +62,7 @@ module GraphqlPicker
       r = result
       if definition.is_a?(GraphQL::Language::Nodes::FragmentSpread)
         r[definition.name] = definition
+        r.merge(search_included_fragment(search_by_name(definition.name, @definitions), r))
       end
       if definition.respond_to?(:selections)
         definition.selections.each do |selection|
