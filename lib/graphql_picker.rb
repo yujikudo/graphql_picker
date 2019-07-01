@@ -17,7 +17,7 @@ module GraphqlPicker
         concat_string += string
       end
       parsed = parse(concat_string)
-      target = search_name(@name, parsed.definitions)
+      target = search_by_name(@name, parsed.definitions)
       fragments = search_included_fragment(target)
 
       results = []
@@ -25,7 +25,7 @@ module GraphqlPicker
       results << target.to_query_string
       Array(fragments.keys).each do |fragment_name|
         results << "# #{search_file(fragment_name)}"
-        results << search_name(fragment_name, parsed.definitions).to_query_string
+        results << search_by_name(fragment_name, parsed.definitions).to_query_string
       end
       results.join("\n")
     end
@@ -34,21 +34,21 @@ module GraphqlPicker
       search_files.each do |file|
         string = File.read(file)
         parsed = parse(string)
-        if search_name(name, parsed.definitions)
+        if search_by_name(name, parsed.definitions)
           return file.to_s
         end
       end
       nil
     end
 
-    def search_name(name, definitions)
+    def search_by_name(name, definitions)
       definitions.each do |definition|
         if definition.respond_to?(:name)
           if name == definition.name
             return definition
           end
         elsif definition.respond_to?(:selections)
-          if (obj = search_name(name, definition.selections)) && !obj.nil?
+          if (obj = search_by_name(name, definition.selections)) && !obj.nil?
             return obj
           end
         end
