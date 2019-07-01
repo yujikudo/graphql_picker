@@ -5,10 +5,9 @@ require 'graphql'
 module GraphqlPicker
 
   class Picker
-    def initialize(name, path="./", extensions = [])
-      @name = name
-      @path = path
-      @extensions = extensions
+    def initialize(options)
+      @name = options[:name]
+      @path = options[:path] || "./"
     end
 
     def pick
@@ -21,10 +20,11 @@ module GraphqlPicker
       target = search_name(@name, parsed.definitions)
       fragments = search_included_fragment(target)
 
-      puts target.to_query_string
+      result = target.to_query_string
       Array(fragments.keys).each do |fragment_name|
-        puts search_name(fragment_name, parsed.definitions).to_query_string
+        result += search_name(fragment_name, parsed.definitions).to_query_string
       end
+      result
     end
 
     def search_name(name, definitions)
@@ -66,11 +66,6 @@ module GraphqlPicker
     def parse(all)
       GraphQL.parse(all)
     end
-  end
-
-  def self.execute(name, path = "./", extensions = [])
-    picker = GraphqlPicker::Picker.new(name, path, extensions)
-    picker.pick
   end
 
 

@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+#
+require "optparse"
+require 'graphql_picker'
+
+params = ARGV.getopts("name:", "path:")
+puts GraphqlPicker::Picker.new(params).pick
