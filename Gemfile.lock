@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    graphql_picker (0.1.0)
+    graphql_picker (0.1.1)
       graphql (= 1.9.7)
 
 GEM

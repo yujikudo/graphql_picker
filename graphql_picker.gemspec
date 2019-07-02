@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Pickup Graphql query and mutaiton}
   spec.description   = %q{Pickup Graphql query and mutaito}
-  spec.homepage      = "https://github.com/yujikudo/memo"
+  spec.homepage      = "https://github.com/yujikudo/graphql_picker"
   spec.license       = "MIT"
   spec.required_ruby_version
 
