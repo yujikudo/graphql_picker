@@ -3,7 +3,7 @@
 It is hard to find GraphQL queries and mutations created in Apollo in .graphql files.  
 There are many fragments used by Query and Mutation.  
 Then, it is problematic to create a query when you execute in GraphiQL etc.  
-GraphQL Picker can extract related fragments by specifying the query name of GrapqhQL.  
+GraphQL Picker can extract related fragments by specifying the Operation name.  
 
 ## Installation
 
@@ -22,7 +22,7 @@ Or install it yourself as:
     $ gem install graphql_picker
 
 ## Usage
-You can search Query name `User` use option `-n`
+You can search Operation name `User` use option `-n`
 
 
     $ graphql_picker -n User 
