@@ -27,7 +27,7 @@ You can search Query name `User` use option `-n`
 
     $ graphql_picker -n User 
     
-Option `-p` is used for limit search directory
+Option `-p` is used to limit search directory
 
 
     $ graphql_picker -n User  -p graphqls_directory
